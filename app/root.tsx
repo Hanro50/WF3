@@ -1,4 +1,5 @@
-import { Toolbar, Button, ThemeProvider } from "@mui/material";
+/* eslint-disable react/jsx-pascal-case */
+import { Button, ThemeProvider, SwipeableDrawer, IconButton } from "@mui/material";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
@@ -12,6 +13,8 @@ import {
 } from "@remix-run/react";
 import { SWRConfig } from "swr";
 import { theme } from "./theme";
+import { useState } from "react";
+import BurgerMenuIcon from "@mui/icons-material/Menu.js";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -19,6 +22,7 @@ export const links: LinksFunction = () => [
 
 export default function App() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   return (
     <html lang="en">
       <head>
@@ -35,10 +39,29 @@ export default function App() {
                 fetch(resource, init).then((res) => res.json()),
             }}
           >
-            <Toolbar sx={{ backgroundColor: "blue" }}>
+
+            <IconButton sx={{ position: "absolute", top: 5, left: 5 }} onClick={() => setOpen(true)}>
+              {/**@ts-ignore */}
+              <BurgerMenuIcon.default />
+            </IconButton>
+
+            <SwipeableDrawer
+              sx={{ width: 400,"& button":{
+                margin:0.5
+              } }}
+              open={open} onClose={() => setOpen(false)} onOpen={() => setOpen(true)}
+            >
               <Button
                 variant="contained"
-                style={{ marginRight: 8, width: 100 }}
+
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                Close Menu
+              </Button>
+              <Button
+                variant="contained"
                 onClick={() => {
                   navigate("/proxy");
                 }}
@@ -47,7 +70,6 @@ export default function App() {
               </Button>
               <Button
                 variant="contained"
-                style={{ marginRight: 8, width: 100 }}
                 onClick={() => {
                   navigate("/script");
                 }}
@@ -56,14 +78,15 @@ export default function App() {
               </Button>
               <Button
                 variant="contained"
-                style={{ marginRight: 8, width: 100 }}
                 onClick={() => {
                   navigate("/stats");
                 }}
               >
                 Stats
               </Button>
-            </Toolbar>
+
+
+            </SwipeableDrawer>
             <Outlet />
             <ScrollRestoration />
             <Scripts />

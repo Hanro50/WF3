@@ -49,7 +49,7 @@ if (cluster.isWorker) {
   function sendError(
     client: internal.Duplex | TLSSocket,
     code: number,
-    message: string
+    message: string,
   ) {
     try {
       let j: proxy[] = [];

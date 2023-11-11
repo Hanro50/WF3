@@ -36,7 +36,7 @@ if (cluster.isPrimary) {
 
   cluster.on("exit", (worker, code, signal) => {
     console.log(
-      `Worker ${worker.process.pid} died with code ${code} and signal ${signal}`
+      `Worker ${worker.process.pid} died with code ${code} and signal ${signal}`,
     );
     if (!shuttingDown) {
       const newWorker = cluster.fork();

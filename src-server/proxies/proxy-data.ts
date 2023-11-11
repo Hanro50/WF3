@@ -22,7 +22,7 @@ export function getData() {
   return proxyData.proxies;
 }
 export function setOnProxyChange(
-  callback: (data: ProxySettings["proxies"]) => void
+  callback: (data: ProxySettings["proxies"]) => void,
 ) {
   onProxyChange = callback;
 }

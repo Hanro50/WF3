@@ -69,14 +69,7 @@ export default function TaskId() {
   useEffect(() => {
     setReady(typeof Terminal !== "object");
   }, [id]);
-  if (typeof document !== "undefined") {
-    const infdata = document.getElementsByClassName(
-      "react-terminal-window-buttons",
-    );
-    for (let i = 0; i < infdata.length; i++) {
-      infdata[i].remove();
-    }
-  }
+
   function handleTerminate(input: string) {
     console.log(input);
   }
@@ -89,6 +82,14 @@ export default function TaskId() {
           height: "100%",
           maxHeight: "100%",
           width: "100%",
+          "& .react-terminal-wrapper": {
+            px: { xs: 1, sm: 2.8125, md: 5.625 },
+            pt: { xs: 3.5, sm: 6.25, md: 9.375 },
+            transition: "padding 0.5s",
+          },
+          "& .react-terminal-window-buttons": {
+            display: "none",
+          },
         }}
       >
         <Typography variant="h6">{id}</Typography>
@@ -98,7 +99,7 @@ export default function TaskId() {
             display: "flex",
             flexWrap: "wrap",
             alignItems: "stretch",
-            "& button": { width: "100px", mx: 0.5 },
+            "& button": { width: "100px", mx: 0.5, mt: 0.5 },
           }}
         >
           <Button

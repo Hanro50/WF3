@@ -1,11 +1,23 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { Outlet, useNavigate } from "@remix-run/react";
+import { useState } from "react";
 import useSWR from "swr";
+import { theme } from "~/theme";
 
 export default function Tasks() {
   const { data, mutate } = useSWR("/api/activities");
   const navigate = useNavigate();
   console.log(data);
+  const [open, setOpen] = useState(false);
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Container
       sx={{
@@ -19,52 +31,57 @@ export default function Tasks() {
       <Typography sx={{ color: "black", my: 2 }} variant="h4">
         Task Manager
       </Typography>
-      <Grid container spacing={0.5} sx={{ flexGrow: 1 }}>
-        <Grid
-          item
-          xs={4}
-          sm={3}
-          md={2}
-          sx={{ display: "flex", flexDirection: "column" }}
+
+      <Dialog
+        sx={{
+          outline: "1px solid #ccc",
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "center",
+        }}
+        open={open}
+        fullScreen={fullScreen}
+        onClose={() => setOpen(false)}
+      >
+        <Typography variant="h6">Tasks</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
+            minWidth: 200,
+            "& button": {
+              m: 0.5,
+            },
+            margin: 2,
+          }}
         >
-          <Typography variant="h6">Tasks</Typography>
-          <Box
-            sx={{
-              outline: "1px solid black",
-              flexGrow: 1,
-              padding: 2,
-              borderRadius: 5,
-              "& button": {
-                margin: 0.5,
-              },
-            }}
-          >
-            <Button
-              sx={{ width: "100%", textTransform: "none" }}
-              variant="contained"
-              onClick={mutate}
-            >
-              Refresh
-            </Button>
-            {data?.map &&
-              data?.map((script: any) => {
-                return (
-                  <Button
-                    key={script.id}
-                    sx={{ width: "100%", textTransform: "none" }}
-                    variant="contained"
-                    onClick={() => navigate(`/task/${script.id}`)}
-                  >
-                    {script.name}
-                  </Button>
-                );
-              })}
-          </Box>
-        </Grid>
-        <Grid item xs={8} sm={9} md={10}>
-          <Outlet />
-        </Grid>
-      </Grid>
+          <Button variant="contained" onClick={mutate}>
+            Refresh
+          </Button>
+          {data?.map &&
+            data?.map((script: any) => {
+              return (
+                <Button
+                  key={script.id}
+                  variant="contained"
+                  onClick={() => navigate(`/task/${script.id}`)}
+                >
+                  {script.name}
+                </Button>
+              );
+            })}
+          <Button variant="contained" onClick={() => setOpen(false)}>
+            Close
+          </Button>
+        </Box>
+      </Dialog>
+
+      <Outlet
+        context={() => {
+          return setOpen(true);
+        }}
+      />
     </Container>
   );
 }

@@ -142,6 +142,3 @@ export function newActivity(id: string, name: string, script: File, path: Dir) {
   });
   new task(id, name, node);
 }
-setInterval(() => {
-  console.log("MAIN");
-}, 5000);

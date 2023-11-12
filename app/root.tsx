@@ -36,7 +36,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body style={{ margin: 0 }}>
+      <body style={{ margin: 0, height:"100vh" }}>
         <ThemeProvider theme={theme}>
           <SWRConfig
             value={{
@@ -82,7 +82,15 @@ export default function App() {
               <Button
                 variant="contained"
                 onClick={() => {
-                  navigate("/script");
+                  navigate("/task");
+                }}
+              >
+                Tasks
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  navigate("/scripts");
                 }}
               >
                 Scripts

@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "app/routes/script.tsx"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "app/routes/task.tsx"],
   "exclude": ["src-server/**/*", "node_modules/**/*"],
   "compilerOptions": {
     "target": "esNext",

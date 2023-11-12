@@ -14,7 +14,7 @@ export abstract class taskBase {
   public constructor(
     id: string,
     name: string,
-    process: ChildProcessWithoutNullStreams | NodeJS.Process
+    process: ChildProcessWithoutNullStreams | NodeJS.Process,
   ) {
     this.id = id;
     this.log = [];
@@ -61,7 +61,7 @@ export class task extends taskBase {
   constructor(
     id: string,
     name: string,
-    process: ChildProcessWithoutNullStreams
+    process: ChildProcessWithoutNullStreams,
   ) {
     super(id, name, process);
     this.log = [];

@@ -10,8 +10,8 @@ export const io = new Server(server);
 
 export const router = express.Router();
 app.use(parser.json());
-io.on('connection', (socket) => {
-  console.log('a user connected');
+io.on("connection", (socket) => {
+  console.log("a user connected");
 });
 app.use("/api", router);
 
@@ -22,4 +22,3 @@ app.all("*", createRequestHandler({ build }));
 server.listen(3000, () => {
   console.log("listening on *:3000");
 });
-

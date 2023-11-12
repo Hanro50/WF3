@@ -36,7 +36,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body style={{ margin: 0, height:"100vh" }}>
+      <body style={{ margin: 0, height: "100vh" }}>
         <ThemeProvider theme={theme}>
           <SWRConfig
             value={{

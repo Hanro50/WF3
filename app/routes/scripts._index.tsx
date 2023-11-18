@@ -1,9 +1,17 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import { useNavigate } from "@remix-run/react";
 import useSWR from "swr";
-
+interface scriptData {
+  id: string;
+  name: string;
+  runner: string;
+  autoStart: boolean;
+  cwd: string;
+}
 export default function Script() {
-  const { data } = useSWR("/api/scripts");
-
+  const { data } = useSWR<{ [key: string]: scriptData }>("/api/scripts");
+  const navigate = useNavigate();
+  if (!data) return <>Loading</>;
   return (
     <Box
       sx={{
@@ -12,6 +20,13 @@ export default function Script() {
         flexDirection: "column",
         alignItems: "center",
       }}
-    ></Box>
+    >
+      {Object.values(data).map((script) => (
+        <Button key={script.id} onClick={() => navigate(`./${script.id}`)}>
+          {script.name}
+        </Button>
+      ))}
+      <Button onClick={() => navigate("./new")}>New Script</Button>
+    </Box>
   );
 }
